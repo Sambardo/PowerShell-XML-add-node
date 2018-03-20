@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <configSections>
+    <!-- Microsoft.ApplicationServer.Caching.Core assembly name is hard-coded -->
+    <section name="dataCacheConfig" type="Microsoft.ApplicationServer.Caching.DataCacheConfigSection, Microsoft.ApplicationServer.Caching.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+    <section name="fabric" type="Microsoft.Fabric.Common.ConfigFile, Microsoft.WindowsFabric.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" allowLocation="true" allowDefinition="Everywhere" />
+    <section name="dataCache" type="Microsoft.ApplicationServer.Caching.DataCacheSection, Microsoft.ApplicationServer.Caching.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+    <section name="uri" type="System.Configuration.UriSection, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  </configSections>
+  <appSettings>
+    <add key="backgroundGC" value="true" />
+  </appSettings>
+  <dataCacheConfig cacheHostName="AppFabricCachingService">
+    <log location="C:\ProgramData\Microsoft\AppFabric\Runtime" logLevel="-1" />
+    <clusterConfig provider="SPDistributedCacheClusterProvider" connectionString="Data Source=SQL;Initial Catalog=SharePoint_Config;Integrated Security=True;Enlist=False" />
+  </dataCacheConfig>
+  <fabric>
+    <section name="param" path="">
+      <key name="VersionInfoClass" value="Microsoft.ApplicationServer.Caching.ServerVersionInfo, Microsoft.ApplicationServer.Caching.Server" />
+      <key name="DroppedReplicaKeepDuration" value="0" />
+      <key name="ClusterStableNodeUpInterval" value="10" />
+      <key name="RPFederationCloseTimeout" value="15" />
+      <key name="ReplicationQueueCapacity" value="128" />
+      <key name="CopyQueueCapacity" value="2" />
+      <key name="ReplicationTempListCapacity" value="1024" />
+      <key name="ReplicationTempListInitialSize" value="128" />
+      <key name="ReplicationRetryInterval" value="12" />
+      <key name="ThrowOnAssert" value="true" />
+      <key name="KeepOperationOnSecondary" value="false" />
+      <key name="ExternalRingStateUpdateTimeout" value="480" />
+      <key name="ExternalStoreUpdateRetry" value="8" />
+    </section>
+  </fabric>
+  <dataCache size="Small">
+    <hosts>
+      <host replicationPort="22236" arbitrationPort="22235" clusterPort="22234" hostId="1739552749" size="1228" leadHost="true" account="NT AUTHORITY\NETWORK SERVICE" name="localhost" cacheHostName="AppFabricCachingService" cachePort="22233" />
+    </hosts>
+  </dataCache>
+  <uri>
+    <iriParsing enabled="true" />
+  </uri>
+  <runtime>
+    <gcServer enabled="true" />
+  </runtime>
+  <startup>
+    <supportedRuntime version="v4.0.30319" />
+    <supportedRuntime version="v4.0" />
+  </startup>
+</configuration>
